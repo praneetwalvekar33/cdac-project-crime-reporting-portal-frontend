@@ -6,6 +6,7 @@ import UserRegistration from './component/user/registration/registration';
 import UserDetailRegistration from './component/user/detailsRegistration/detailsRegistration';
 import UserFileComplaint from './component/user/fileComplaint/fileComplaint';
 import UserCheckStatus from './component/user/checkStatus/checkStatus';
+import UserComplaintList from './component/user/complaintList/complaintList';
 import UserWithDrawComplaint from './component/user/withdrawComplaint/withDrawComplaint';
 import UserUpdateMobileNo from './component/user/updateMobileNo/updateMobileNo';
 import UserProfile from './component/user/login/login';
@@ -13,6 +14,7 @@ import PoliceLogin from './component/police/login/login';
 import PoliceProfile from './component/police/profile/profile';
 import PoliceComplaintList from './component/police/complaintList/complaintList';
 import PoliceUpdateComplaint from './component/police/updateComplaint/updateComplaint';
+
 import MainDiv from './mainDiv'
 
 
@@ -26,6 +28,7 @@ function App() {
           <Route path="/user/details" exact element={<UserDetailRegistration/>}/>
           <Route path="/user/fileComplaint" exact element={<UserFileComplaint/>}/>
           <Route path="/user/checkStatus" exact element={<UserCheckStatus/>}/>
+          <Route path="/user/complaintList" exact element={<UserComplaintList/>}/>
           <Route path="/user/withdrawComlaint" exact element={<UserWithDrawComplaint/>}/>
           <Route path="/user/mobileNo" exact element={<UserUpdateMobileNo/>}/>
           <Route path="/user/profile" exact element={<UserProfile/>}/>
