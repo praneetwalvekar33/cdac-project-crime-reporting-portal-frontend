@@ -33,57 +33,57 @@ const navbar = ()=>
                                 </NavLink>
                             </li>
                             <li className="nav-item dropdown">
-                                <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                                <NavLink className="nav-link dropdown-toggle" to={"/user/fileComplaint"} role="button" data-bs-toggle="dropdown"
                                    aria-expanded="false">
                                     Lodge a Complaint
-                                </a>
+                                </NavLink>
                                 <ul className="dropdown-menu">
-                                    <li><a className="dropdown-item" href="#">Women and Child</a></li>
-                                    <li><a className="dropdown-item" href="#">Cyber</a></li>
-                                    <li><a className="dropdown-item" href="#">Financial</a></li>
-                                    <li><a className="dropdown-item" href="#">Others</a></li>
+                                    <li><NavLink className="dropdown-item" to={"/user/fileComplaint"}>Women and Child</NavLink></li>
+                                    <li><NavLink className="dropdown-item" to={"/user/fileComplaint"}>Cyber</NavLink></li>
+                                    <li><NavLink className="dropdown-item" to={"/user/fileComplaint"}>Financial</NavLink></li>
+                                    <li><NavLink className="dropdown-item" to={"/user/fileComplaint"}>Others</NavLink></li>
                                 </ul>
                             </li>
 
                             <li className="nav-item">
-                                <NavLink className="nav-link" to={""}>View Complaints</NavLink>
+                                <NavLink className="nav-link" to={"/user/complaintList"}>View Complaints</NavLink>
                             </li>
                             <li className="nav-item dropdown">
-                                <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                                <NavLink className="nav-link dropdown-toggle" to={""} role="button" data-bs-toggle="dropdown"
                                    aria-expanded="false">
                                     Resources
-                                </a>
+                                </NavLink>
                                 <ul className="dropdown-menu">
-                                    <li><a className="dropdown-item" href="#">Incidence of Crime</a></li>
-                                    <li><a className="dropdown-item" href="#">Monthly Report</a></li>
-                                    <li><a className="dropdown-item" href="#">More</a></li>
+                                    <li><NavLink className="dropdown-item" to={""}>Incidence of Crime</NavLink></li>
+                                    <li><NavLink className="dropdown-item" to={""}>Monthly Report</NavLink></li>
+                                    <li><NavLink className="dropdown-item" to={""}>More</NavLink></li>
                                 </ul>
                             </li>
                             <li className="nav-item dropdown">
-                                <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                                <NavLink className="nav-link dropdown-toggle" to={""} role="button" data-bs-toggle="dropdown"
                                    aria-expanded="false">
                                     Other Services
-                                </a>
+                                </NavLink>
                                 <ul className="dropdown-menu">
-                                    <li><a className="dropdown-item" href="#">Lost and Found</a></li>
-                                    <li><a className="dropdown-item" href="#">Police Verification</a></li>
-                                    <li><a className="dropdown-item" href="#">Feedback</a></li>
+                                    <li><NavLink className="dropdown-item" to={""}>Lost and Found</NavLink></li>
+                                    <li><NavLink className="dropdown-item" to={""}>Police Verification</NavLink></li>
+                                    <li><NavLink className="dropdown-item" to={""}>Feedback</NavLink></li>
                                 </ul>
                             </li>
                         </ul>
                             <ul className="nav-item dropdown ">
-                                <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                                <NavLink className="nav-link dropdown-toggle" to={""} role="button" data-bs-toggle="dropdown"
                                    aria-expanded="false">
                                     <img
                                                 src={avatar}
                                                 className="rounded-circle"
                                                 height="50px" alt="Avatar"/>
-                                </a>
+                                </NavLink>
                                 <ul className="dropdown-menu dropdown-menu-end">
-                                    <a className="dropdown-item" href="#">My Profile</a>
-                                    <a className="dropdown-item" href="#">Settings</a>
+                                    <NavLink className="dropdown-item" to={"/user/profile"}>My Profile</NavLink>
+                                    <NavLink className="dropdown-item" to={"/user/details"}>Edit</NavLink>
                                     <div className="dropdown-divider"></div>
-                                    <a className="dropdown-item" href="#">Logout</a>
+                                    <NavLink className="dropdown-item" to={""}>Logout</NavLink>
                                 </ul>
                             </ul>
 
