@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import '../../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import { useNavigate } from "react-router-dom";
 function ComplaintList (){
@@ -11,6 +11,7 @@ function ComplaintList (){
     const [compDate, setcompdate] = useState({ "cDate": "" });
     const [msgdate, setmsgdate] = useState({ "msg": "" });
     const [searchText, setSearchText] = useState('');
+
 
     const navigate = useNavigate();
 
