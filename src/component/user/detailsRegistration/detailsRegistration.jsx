@@ -1,15 +1,12 @@
-import { computeHeadingLevel } from "@testing-library/react";
-import { useState , useEffect} from "react"
-import { toast } from "react-toastify";
 import axios from 'axios';
+import '../../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 
 
 const DetailsRegistration = () => {
-
-
-
 
 //     const [details,setDeatils] = useState({"name":"","email":"","password":""});
 
@@ -47,8 +44,8 @@ const [formData, setFormData] = useState({
     fatherName: '',
     password: sessionStorage.getItem("password"),
     currentAddress: {
-      addressLine1: '',
-      addressLine2: '',
+      addressLine1: '123',
+      addressLine2: '1234',
       district: '',
       state: '',
       country: '',
@@ -60,7 +57,7 @@ const [formData, setFormData] = useState({
       district: '',
       state: '',
       country: '',
-      pincode: ''
+      pincode:''
     },
     fname: sessionStorage.getItem("fname"),
     dob: '2024-02-15',
@@ -88,11 +85,38 @@ const [formData, setFormData] = useState({
     console.log(formData);
   };
 
+  const handlePermanentAddressChange = (e) => {
+    const {name, value} = e.target;
+    console.log(name);
+    setFormData({
+      ...formData,
+      permanentAddress: {
+        ...formData.permanentAddress,
+        [name] : value
+      }
+    });
+    console.log(formData);
+  };
+
+  const handleCurrentAddressChange = (e) => {
+    const {name, value} = e.target;
+    console.log(name);
+    setFormData({
+      ...formData,
+      currentAddress: {
+        ...formData.permanentAddress,
+        [name] : value
+      }
+    });
+    console.log(formData);
+  };
+
   const confirmPasswordHandle = (e)=>{
-    console.log(e);
     var copyofpass = {...confirmPassword};
     copyofpass[e.target.name] = e.target.value;
     setConfirmPassword(copyofpass);
+    console.log(formData);
+    console.log(confirmPassword)
   };
 
   const handleSubmit = async (e) => {
@@ -200,23 +224,23 @@ return (
                               <div className="card-body py-8 px-md-8" style={{backgroundColor:'lightskyblue'}}>
                               <div className="form-outline mb-1">
                               <label className="form-label" for="ipt-name">Address Line1</label>
-                              <input type="text" className="form-control" name="permanentAddress.addressLine1" value={formData.permanentAddress.addressLine1} onChange={handleChange} required/>
+                              <input type="text" className="form-control" name="addressLine1" value={formData.permanentAddress.addressLine1} onChange={handlePermanentAddressChange} required/>
                               </div>
                               <div className="form-outline mb-1">
                               <label className="form-label" for="ipt-name">Address Line2</label>
-                              <input type="text" className="form-control" name="permanentAddress.addressLine2" value={formData.permanentAddress.addressLine2} onChange={handleChange} required />
+                              <input type="text" className="form-control" name="addressLine2" value={formData.permanentAddress.addressLine2} onChange={handlePermanentAddressChange} required />
                               </div>
                               <div className="form-outline mb-1">
                               <label className="form-label" for="ipt-name">District</label>
-                              <input type="text" className="form-control" name="permanentAddress.district" value={formData.permanentAddress.district} onChange={handleChange} required/>
+                              <input type="text" className="form-control" name="district" value={formData.permanentAddress.district} onChange={handlePermanentAddressChange} required/>
                               </div>
                               <div className="form-outline mb-1">
                               <label className="form-label" for="ipt-name">State</label>
-                              <input type="text" className="form-control" name="permanentAddress.state" value={formData.permanentAddress.state} onChange={handleChange} required/>
+                              <input type="text" className="form-control" name="state" value={formData.permanentAddress.state} onChange={handlePermanentAddressChange} required/>
                               </div>
                               <div className="form-outline mb-1">
                               <label className="form-label" for="ipt-name">Pin Code</label>
-                              <input type="text" className="form-control" name="permanentAddress.pincode" value={formData.permanentAddress.pincode} onChange={handleChange} required />
+                              <input type="text" className="form-control" name="pincode" value={formData.permanentAddress.pincode} onChange={handlePermanentAddressChange} required />
                               </div>
                               </div>
                 </div>
@@ -225,23 +249,23 @@ return (
               <div className="card-body py-8 px-md-8" style={{backgroundColor:'lightpink'}}>
               <div className="form-outline mb-1">
               <label className="form-label" for="ipt-name">Address Line1</label>
-              <input type="text" className="form-control" name="currentAddress.addressLine1" value={formData.currentAddress.addressLine1} onChange={handleChange} required/>
+              <input type="text" className="form-control" name="addressLine1" value={formData.currentAddress.addressLine1} onChange={handleCurrentAddressChange} required/>
               </div>
               <div className="form-outline mb-1">
               <label className="form-label" for="ipt-name">Address Line2</label>
-              <input type="text" className="form-control" name="currentAddress.addressLine2" value={formData.currentAddress.addressLine2} onChange={handleChange} required/>
+              <input type="text" className="form-control" name="addressLine2" value={formData.currentAddress.addressLine2} onChange={handleCurrentAddressChange} required/>
               </div>
               <div className="form-outline mb-1">
               <label className="form-label" for="ipt-name">District</label>
-              <input type="text" className="form-control" name="currentAddress.district" value={formData.currentAddress.district} onChange={handleChange} required/>
+              <input type="text" className="form-control" name="district" value={formData.currentAddress.district} onChange={handleCurrentAddressChange} required/>
               </div>
               <div className="form-outline mb-1">
               <label className="form-label" for="ipt-name">State</label>
-              <input type="text" className="form-control" name="currentAddress.state" value={formData.currentAddress.state} onChange={handleChange} required />
+              <input type="text" className="form-control" name="state" value={formData.currentAddress.state} onChange={handleCurrentAddressChange} required />
               </div>
               <div className="form-outline mb-1">
               <label className="form-label" for="ipt-name">Pin Code</label>
-              <input type="text" className="form-control" name="currentAddress.pincode" value={formData.currentAddress.pincode} onChange={handleChange} required />
+              <input type="text" className="form-control" name="pincode" value={formData.currentAddress.pincode} onChange={handleCurrentAddressChange} required />
               </div>
             
               </div>
