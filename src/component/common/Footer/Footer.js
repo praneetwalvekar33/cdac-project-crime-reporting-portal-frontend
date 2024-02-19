@@ -4,7 +4,7 @@ const Footer = () => {
     return (
         <>
             <footer className="bg-body-tertiary text-center text-lg-start"
-                    style={{verticalAlign: "bottom"}}>
+                    style={{verticalAlign: "bottom" , marginTop:"50px"}}>
                 <div className="text-center p-3 bg-dark-subtle">
                     © 2023 Copyright
                 </div>
