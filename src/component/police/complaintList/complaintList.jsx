@@ -1,16 +1,39 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import '../../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
+import { getIoComplaintList } from "../../../services/io";
 import { useNavigate } from "react-router-dom";
 function ComplaintList (){
 
     
-    const [details, setDetails] = useState([{ "Sno": 1, "Complaint_id": 12345, "Complaint_status": "Active", "Date": "12-nov-2020" }, { "Sno": 2, "Complaint_id": 567463, "Complaint_status": "close ", "Date": "13-nov-2020" }, { "Sno": 3, "Complaint_id": 98765, "Complaint_status": "Active", "Date": "15-nov-2020" }]);
-    const [detail, setDetail] = useState({ "Sno": "", "Complaint_id": "", "Complaint_status": "", "Date": "" });
+    const [details, setDetails] = useState([{additionalInfo
+        : "",
+        complainant: "",
+        fir: true,
+        incidentDate: "",
+        incidentDescription: "",
+        incidentPlace: "",
+        suspects: "",
+        witness: ""}]);
+    const [detail, setDetail] = useState({additionalInfo
+        : "",
+        complainant: "",
+        fir: true,
+        incidentDate: "",
+        incidentDescription: "",
+        incidentPlace: "",
+        suspects: "",
+        witness: ""});
     const [messageid, setmessageid] = useState({ "msg": "" });
     const [compid, setcompid] = useState({ "id": "" });
     const [compDate, setcompdate] = useState({ "cDate": "" });
     const [msgdate, setmsgdate] = useState({ "msg": "" });
     const [searchText, setSearchText] = useState('');
+
+    useEffect(async ()=>{
+        const responseData = await getIoComplaintList();
+        setDetails(responseData.data);
+    },[]);
+
 
     const navigate = useNavigate();
 
@@ -108,8 +131,8 @@ function ComplaintList (){
                     <tr>
                         <th></th>
                         <th>S No.</th>
-                        <th>Complaint Id</th>
-                        <th>Complaint Status</th>
+                        <th>Complaint</th>
+                        <th>Place</th>
                         <th>Date</th>
                         <th></th>
 
@@ -124,12 +147,12 @@ function ComplaintList (){
                                         <tr key={detail.Complaint_id}>
                                             <td>{"  "}</td>
                                             <td>{detail.Sno}</td>
-                                            <td>{detail.Complaint_id}</td>
-                                            <td>{detail.Complaint_status}</td>
-                                            <td>{detail.Date}</td>
+                                            <td>{detail.complainant}</td>
+                                            <td>{detail.incidentPlace}</td>
+                                            <td>{detail.incidentDate}</td>
                                             <td></td>
                                             <td>
-                                                <button className="btn btn-warning" value={detail} onClick={()=> {navigate("/police/complaintList/update")}}>Select</button>
+                                                <button className="btn btn-warning" value={detail} onClick={()=> {navigate("/police/complaintList/update",)}}>Select</button>
                                             </td>
                                         </tr>
                                     </>);
@@ -141,9 +164,9 @@ function ComplaintList (){
                                     <tr key={detail.Complaint_id}>
                                         <td>{"  "}</td>
                                         <td>{detail.Sno}</td>
-                                        <td>{detail.Complaint_id}</td>
-                                        <td>{detail.Complaint_status}</td>
-                                        <td>{detail.Date}</td>
+                                        <td>{detail.complainant}</td>
+                                        <td>{detail.incidentPlace}</td>
+                                        <td>{detail.incidentDate}</td>
                                         <td></td>
                                         <td>
                                             <button className="btn btn-warning" value={detail} onClick={()=> {navigate("/police/complaintList/update")}}>Select</button>
