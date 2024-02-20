@@ -1,54 +1,42 @@
-import { useState, useEffect } from "react";
-import '../../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
-import { useNavigate , useLocation } from "react-router-dom";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
+import '../../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 
 const Profile = () => {
   const location = useLocation();
-  const URL = "http://localhost:8080/citizen/";
+  const URL = "http://localhost:8080/citizen";
   
   const [citizen, setCitizen] = useState({
     id :'',
-    title: 'Mr',
-    gender: 'MALE',
-    mobileNo: '',
-    addharNo: '',
+    baseEntityUserTitle: 'Mr',
+    baseEntityUserGender: 'MALE',
+    baseEntityUserMobileNo: '',
+    aaddharNo: '',
     occupation: '',
-    age: 0,
-    email: '',
+    baseEntityUserAge: 0,
+    baseEntityUserEmail: '',
     fatherName: '',
-    password: '',
-    currentAddress: {
-      addressLine1: '',
-      addressLine2: '',
-      district: '',
-      state: '',
-      country: '',
-      pincode: ''
-    },
-    permanentAddress: {
-      addressLine1: '',
-      addressLine2: '',
-      district: '',
-      state: '',
-      country: '',
-      pincode: ''
-    },
-    fname: '',
-    dob: '2024-02-15',
-    lname: ''
+    baseEntityUserFName: '',
+    baseEntityUserDOB: '2024-02-15',
+    baseEntityUserLName: '',
+    baseEntityUserRole:''
   });
   // const [citizen, setCitizen] = useState([]);
   const [complaints , setComplaints] = useState([{"id":1 , "policeStation": "puna thana","type":"HIT_AND_RUN","status":"ACTIVE"},
                                                 {"id":2, "policeStation": "puna thana","type":"RUN","status":"ACTIVE"}]);
 
   const [searchText, setSearchText] = useState('');
-
-  const userId = location.state && location.state.userId;
+  // const email = location.state && location.state.userId;
+  // const userId =
   const getCitizen = () => {
-    axios.get(URL + userId).then((response) => {
+    const headers = {
+      headers: {
+        Authorization: `Bearer sessionStorage.getItem('jwt')`,
+      }
+    }
+    axios.get(URL , headers).then((response) => {
       console.log(response.data)
         setCitizen(response.data);
     });
@@ -65,7 +53,7 @@ const OnSearch = (args) => {
 }
 
 useEffect(()=>{
-  console.log(userId);
+  console.log("..");
   getCitizen();
   if(citizen.id !==''){
     toast.success("User Logged in Successfull..!!")
@@ -80,15 +68,17 @@ useEffect(()=>{
   <div className="card sm-3" style={{ width: "85%" }}>
     <div className="card-header" style={{ backgroundColor: "#f2f2f2", textAlign: "left" }}>
       <h4 className="card-title">Hello</h4>
-      <h5>{citizen.fname} {citizen.lname}</h5>
-      <h5>{citizen.email}</h5>
-      <h5>{citizen.mobileNo}</h5>
+      <h5>{citizen.baseEntityUserFName} {citizen.baseEntityUserLName}</h5>
+      <h5>{citizen.baseEntityUserEmail}</h5>
+      <h5>{citizen.baseEntityUserMobileNo}</h5>
     </div>
     <div className="card-body">
-  <Link to={{ pathname: '/user/fileComplaint',  state: { Id : userId }  }}>
+  {/* <Link to={{ pathname: '/user/fileComplaint',  state: { Id : userId }  }}> */}
+  <Link to={"/user/fileComplaint"}>
     <button type="button" class="btn btn-primary" style={{marginRight:"7px"}}>File a new complaint</button>
   </Link>
-  <Link to={{ pathname:"/user/withdrawComlaint",state: { Id : userId }}}>
+  {/* <Link to={{ pathname:"/user/withdrawComlaint",state: { Id : userId }}}> */}
+  <Link to={"/user/withdrawComlaint"}>
     <button type="button" class="btn btn-primary" style={{marginRight:"7px"}}>Withdraw A pending complaint</button>
   </Link>
   <Link to={"#!"}>
@@ -175,46 +165,3 @@ useEffect(()=>{
 }
 
 export default Profile;
-
-
-
-// <tbody>
-// {
-//     details.map((detail) => {
-//         if (searchText !== "") {
-//             if (detail.Complaint_id.toString().toLowerCase().includes(searchText.toLowerCase())) {
-//                 return (<>
-//                     <tr key={detail.Complaint_id}>
-//                         <td>{"  "}</td>
-//                         <td>{detail.Sno}</td>
-//                         <td>{detail.Complaint_id}</td>
-//                         <td>{detail.Complaint_status}</td>
-//                         <td>{detail.Date}</td>
-//                         <td></td>
-//                         <td>
-//                             <button className="btn btn-Info" value={detail} onClick={()=> {navigate("/user/checkStatus")}}  >View</button>
-//                         </td>
-//                     </tr>
-//                 </>);
-//             } else {
-//                 return null;
-//             }
-//         } else {
-//             return (
-//                 <tr key={detail.Complaint_id}>
-//                     <td>{"  "}</td>
-//                     <td>{detail.Sno}</td>
-//                     <td>{detail.Complaint_id}</td>
-//                     <td>{detail.Complaint_status}</td>
-//                     <td>{detail.Date}</td>
-//                     <td></td>
-//                     <td>
-//                         <button className="btn btn-info" value={detail} onClick={()=> {navigate("/user/checkStatus")}} >View</button>
-//                     </td>
-//                 </tr>)
-//         }
-
-//     })
-
-// }
-// </tbody>

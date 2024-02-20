@@ -4,10 +4,10 @@ import './login.css'
 import { toast } from 'react-toastify';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { signinUser } from '../../../service/citizen';
 
 const Login = () => {
-
-const URL = "http://localhost:8080"
+  const url = "http://localhost:8080/users/signin"
 const navigate = useNavigate();
 const [info , setInfo] = useState({"email":"","password":""});
 
@@ -19,27 +19,47 @@ const OnTextChange = (args) => {
   setInfo(copyofinfo);
 };
 
-const doLogin = () => {
-  var loginURL = URL + "/citizen/login";
+const doLogin = async () => {
     if (info.email.length == 0) {
       console.log("notfound")
       toast.warn('enter email')
     } else if (info.password.length == 0) {
       toast.warn('enter password')
     } else {
-      console.log(info);
-    axios.post(loginURL,info).then((citizenInfo)=>{
-    console.log(citizenInfo.data.id);
-    console.log("successfull");
-    toast.success("Welcome to the site...")
-    navigate('/user/profile', { state: { userId: citizenInfo.data.id} });
-  }).catch((error)=>{
-    console.log("failed");
-    toast.error("Invalid Id or Password..!!");
-  });
+      // const result = await signinUser(info.email,info.password);
+      // if(result['status'] == 'success'){
+      //   const token = result['data']['jwt']
+      //   sessionStorage['token'] = token
+      //   console.log("successfull");
+      //   toast.success("Welcome to the site...")
+      //   console.log(info);
+      //   navigate('/user/profile');
+      //   // , { state: { userId: citizenInfo.data.id} }
+      // } else {
+      //   console.log("failed");
+      //   console.log(result['error']);
+      //   toast.error("Invalid Id or Password..!!");
+      // }
+          const result = axios.post(url,info).then((response)=>{
+            const token = response.data.jwt;
+            console.log(token);
+            sessionStorage.setItem("token",token);
+            // sessionStorage['token'] = token
+            console.log("successfull");
+            toast.success("Welcome to the site...")
+            console.log(info);
+            navigate('/user/profile');
+            // , { state: { userEmail:info.email} }
+          }).catch((error) => {
+              console.log("failed");
+              console.log(result['error']);
+              toast.error("Invalid Id or Password..!!");
+          });
     }
 };
-    return (<section className=" text-center text-lg-start d-flex justify-content-center mt-5" >
+    return (
+    <div  style={{}}>
+    <section className=" text-center text-lg-start d-flex justify-content-center mt-5" >
     <div className="card sm-3 " style={{width: "40%"}}>
       <div className="row g-0 d-flex align-items-center">
         
@@ -74,7 +94,8 @@ const doLogin = () => {
         </div>
       </div>
     </div>
-  </section>)
+  </section>
+  </div>)
 }
 
 export default Login;

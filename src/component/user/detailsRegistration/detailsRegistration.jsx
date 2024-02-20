@@ -40,12 +40,12 @@ const [formData, setFormData] = useState({
     addharNo: '',
     occupation: '',
     age: 0,
-    email: sessionStorage.getItem("email"),
+    baseEntityUserEmail: sessionStorage.getItem("email"),
     fatherName: '',
-    password: sessionStorage.getItem("password"),
+    baseEntityUserPassword: sessionStorage.getItem("password"),
     currentAddress: {
-      addressLine1: '123',
-      addressLine2: '1234',
+      addressLine1: '',
+      addressLine2: '',
       district: '',
       state: '',
       country: '',
@@ -147,12 +147,12 @@ const [formData, setFormData] = useState({
 
 return (
     <section className=" text-center text-lg-start d-flex justify-content-center mt-5" >
-    <div className="card sm-3 " style={{width: "60%",textAlign:"left"}}>
+    <div className="card sm-3 " style={{width: "60%",textAlign:"left" , backgroundColor:"#E2FCFC"}}>
       <div className="row g-0 d-flex align-items-center">
         
         <div className="col-lg-12">
           <div className="card-body py-8 px-md-8">
-            <div className="text-center mb-3">---Registration Details---</div>
+            <div className="text-center mb-3"><h5>---Registration Details---</h5></div>
             <div className="d-flex justify-content-end mb-3">
               <a href='/user/login' className="link-primary">Login</a>
             </div>
@@ -211,17 +211,17 @@ return (
               </div>
               <div className="form-outline mb-1">
               <label className="form-label" for="ipt-name">Email</label>
-              <input type="email" className="form-control" name="email" value={formData.email} onChange={handleChange} required readonly/>
+              <input type="email" className="form-control" name="baseEntityUserEmail" value={formData.baseEntityUserEmail} onChange={handleChange} required readonly/>
               </div>
               <div className="form-outline mb-1">
               <label className="form-label" for="ipt-name">Occupation</label>
               <input type="text" className="form-control" name="occupation" value={formData.occupation} onChange={handleChange} />
               </div>
               <br></br>
-              <div class="row lg - 2" style={{backgroundColor:'green'}}>
+              <div class="row lg - 2" style={{backgroundColor:'#A4FDFD'}}>
                 <div class="col">
                               <label className="form-label" for="ipt-name"><h5>Permanent Address Details :</h5> </label>
-                              <div className="card-body py-8 px-md-8" style={{backgroundColor:'lightskyblue'}}>
+                              <div className="card-body py-8 px-md-8" style={{backgroundColor:' #D6F0F0'}}>
                               <div className="form-outline mb-1">
                               <label className="form-label" for="ipt-name">Address Line1</label>
                               <input type="text" className="form-control" name="addressLine1" value={formData.permanentAddress.addressLine1} onChange={handlePermanentAddressChange} required/>
@@ -246,7 +246,7 @@ return (
                 </div>
                 <div class="col">
                 <label className="form-label" for="ipt-name"><h5>Current Address Details :</h5> </label>
-              <div className="card-body py-8 px-md-8" style={{backgroundColor:'lightpink'}}>
+              <div className="card-body py-8 px-md-8" style={{backgroundColor:' #D6F0F0'}}>
               <div className="form-outline mb-1">
               <label className="form-label" for="ipt-name">Address Line1</label>
               <input type="text" className="form-control" name="addressLine1" value={formData.currentAddress.addressLine1} onChange={handleCurrentAddressChange} required/>
@@ -278,7 +278,7 @@ return (
 
               <div className="form-outline mb-1">
               <label className="form-label" for="ipt-password">Password</label>
-                <input type="password" id="ipt-password" className="form-control" name='password'  value={formData.password} onChange={handleChange}  disabled/>
+                <input type="password" id="ipt-password" className="form-control" name='baseEntityUserPassword'  value={formData.baseEntityUserPassword} onChange={handleChange}  disabled/>
               </div>
             
               <div className="form-outline mb-1">
