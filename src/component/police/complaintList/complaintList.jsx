@@ -12,6 +12,13 @@ function ComplaintList (){
     const [msgdate, setmsgdate] = useState({ "msg": "" });
     const [searchText, setSearchText] = useState('');
 
+    useEffect(async ()=>{
+        const responseData = await getIoComplaintList();
+        console.log(responseData.data)
+        setDetails(responseData);
+    },[]);
+
+
     const navigate = useNavigate();
 
     const setmsg = (msgg) => {
