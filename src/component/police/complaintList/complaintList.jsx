@@ -15,7 +15,8 @@ function ComplaintList (){
     useEffect(async ()=>{
         const responseData = await getIoComplaintList();
         console.log(responseData)
-        setDetails(responseData);
+        setDetails(responseData)
+        console.log(details);
     },[]);
 
 

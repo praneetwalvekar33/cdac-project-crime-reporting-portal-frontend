@@ -3,9 +3,9 @@ import { createUrl,createError } from "./utils";
 
 export async function getIoComplaintList(){
     try{
-        const url = createUrl('IO/complaints');
+        const url = createUrl('citizen/');
         console.log(url);
-        
+
         const headers = {
             headers:{
                 Authorization: `Bearer ${sessionStorage['token']}`
@@ -17,5 +17,5 @@ export async function getIoComplaintList(){
         return response.data.data;
     }catch(error){
         createError(error);
-    }  
+    }
 }

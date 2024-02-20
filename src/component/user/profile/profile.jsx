@@ -10,9 +10,8 @@ const Profile = () => {
   const URL = "http://localhost:8080/citizen/";
   
   const [citizen, setCitizen] = useState({
-    id :'',
-    title: 'Mr',
-    gender: 'MALE',
+    title: '',
+    gender: '',
     mobileNo: '',
     addharNo: '',
     occupation: '',
@@ -47,15 +46,21 @@ const Profile = () => {
   const [searchText, setSearchText] = useState('');
 
   const userId = location.state && location.state.userId;
-  const getCitizen = () => {
-    axios.get(URL + userId).then((response) => {
+  const headers = {
+    headers:{
+      Authorization: `Bearer ${sessionStorage['token']}`
+    }
+  }
+  const getCitizen = async () => {
+    console.log(URL + headers);
+    await axios.get(URL,headers).then((response) => {
       console.log(response.data)
         setCitizen(response.data);
     });
 }
 
 const getComplaints = () => {
-  axios.get(URL + "/citizen/complaint"+citizen.id).then((response) => {
+  axios.get(URL + "/citizen/complaint").then((response) => {
     console.log(response.data)
       setComplaints(response.data);
   });

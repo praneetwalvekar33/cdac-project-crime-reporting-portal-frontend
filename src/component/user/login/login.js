@@ -9,7 +9,7 @@ const Login = () => {
 
 const URL = "http://localhost:8080"
 const navigate = useNavigate();
-const [info , setInfo] = useState({"email":"","password":""});
+const [info , setInfo] = useState({"email":"","password":"", "role":""});
 
 
 const OnTextChange = (args) => {
@@ -20,7 +20,7 @@ const OnTextChange = (args) => {
 };
 
 const doLogin = () => {
-  var loginURL = URL + "/citizen/login";
+  var loginURL = URL + "/users/signin";
     if (info.email.length == 0) {
       console.log("notfound")
       toast.warn('enter email')
@@ -29,10 +29,14 @@ const doLogin = () => {
     } else {
       console.log(info);
     axios.post(loginURL,info).then((citizenInfo)=>{
-    console.log(citizenInfo.data.id);
-    console.log("successfull");
+    console.log(citizenInfo);
+
+    sessionStorage.setItem("token", citizenInfo.data.jwt);
+    sessionStorage.setItem("role", citizenInfo.data.role.authority);
+
+      console.log("successfull");
     toast.success("Welcome to the site...")
-    navigate('/user/profile', { state: { userId: citizenInfo.data.id} });
+    navigate('/user/profile', { state: { } });
   }).catch((error)=>{
     console.log("failed");
     toast.error("Invalid Id or Password..!!");
