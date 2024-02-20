@@ -1,16 +1,22 @@
 import { useState,useEffect } from "react";
 import '../../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import { useNavigate } from "react-router-dom";
+import { getIoComplaintList } from "../../../services/io";
 function ComplaintList (){
 
     
-    const [details, setDetails] = useState([{ "Sno": 1, "Complaint_id": 12345, "Complaint_status": "Active", "Date": "12-nov-2020" }, { "Sno": 2, "Complaint_id": 567463, "Complaint_status": "close ", "Date": "13-nov-2020" }, { "Sno": 3, "Complaint_id": 98765, "Complaint_status": "Active", "Date": "15-nov-2020" }]);
+    const [details, setDetails] = useState([{"Sno": "", "Complaint_id": "", "Complaint_status": "", "Date": "" }]);
     const [detail, setDetail] = useState({ "Sno": "", "Complaint_id": "", "Complaint_status": "", "Date": "" });
     const [messageid, setmessageid] = useState({ "msg": "" });
     const [compid, setcompid] = useState({ "id": "" });
     const [compDate, setcompdate] = useState({ "cDate": "" });
     const [msgdate, setmsgdate] = useState({ "msg": "" });
     const [searchText, setSearchText] = useState('');
+    useEffect(async ()=>{
+        const responseData = await getIoComplaintList();
+        console.log(responseData)
+        setDetails(responseData);
+    },[]);
 
 
     const navigate = useNavigate();
