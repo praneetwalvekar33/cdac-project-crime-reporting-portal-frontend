@@ -1,30 +1,43 @@
-import { useState, useEffect  } from "react";
+import { useEffect, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 import '../../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
-import { useLocation } from "react-router-dom";
-import axios from "axios";
-import { toast } from "react-toastify";
 
 
 function CheckStatus ()  {
 
     const location = useLocation();
-    const [complaints , setComplaints] = useState({"id":1 , "policeStation": "puna thana","incidentPlace":"xyz","type":"HIT_AND_RUN","status":"ACTIVE","remark":"nzcuvaf ljyargj  luyavrldgjyu yvrhauy ouad jh" , "io":"abcd","incidentDate":"2023-12-14" });
+    const [complaints , setComplaints] = useState({
+        complaintId: 2,
+        complaintCitizenFName: "ramaan",
+        complaintPoliceStationAddress: "aaaa",
+        complaintIncidentDescription: "nmnmnmnmnm",
+        complaintIncidentDate: "2022-02-20",
+        complaintSuspects: "ksladklask",
+        complaintIncidentPlace: "nnnnnn",
+        complaintWitness: "abc",
+        complaintAdditionalInfo: "got robbed",
+        remark: "sdkjhksjdhfkjn",
+        status: "PENDING",
+        investigatingOfficerFName:"amaann"
+    });
     const URL = "http://localhost:8080/citizen/complaint";
-    const complaintid = location.state && location.state.Id;
+    const complaint = location.state ;
 
-    const getComplaint = () => {
-        try{
-            console.log("url called ,"+URL)
-            axios.get(URL+complaintid).then((response) => {
-                toast.success("Status Loaded")
-                setComplaints(response.data);
-            })
-        }catch(error){
-            toast.error("Somthing went Wrong..!!")
-        }
-    }
+    // const getComplaint = () => {
+    //     try{
+    //         console.log("url called ,"+URL)
+    //         axios.get(URL+complaintid).then((response) => {
+    //             toast.success("Status Loaded")
+    //             setComplaints(response.data);
+    //         })
+    //     }catch(error){
+    //         toast.error("Somthing went Wrong..!!")
+    //     }
+    // }
     useEffect(()=>{
-        getComplaint();
+        console.log(complaint);
+        // getComplaint();
+        setComplaints(complaint);
     },[]);
     return(
         <section className=" text-center text-lg-start d-flex justify-content-center mt-5" >
@@ -34,13 +47,15 @@ function CheckStatus ()  {
                 <div className="card-body py-8 px-md-8">
                     <div className="text-center mb-3" style={{textAlign :"left"}}><h3>Complaint Status </h3></div>
                     <div className="d-flex justify-content-end mb-3">
-                    <a href='/user/profile' className="link-primary"><h6>Profile</h6></a>
+                    <Link to={"/user/profile"}>
+                        <button className="btn btn-primary" >Profile</button>
+                    </Link>
                     </div>
                     <hr></hr>
                     <div class="row lg - 2">
                     <div className="form-outline mt-2 mb-1" class='col'>
                     <label className="form-label" for="ipt-name" style={{marginBottom:"0.5px", marginTop:"5px"}}>Complaint ID :</label>
-                        <input type="text" id="ipt-id" className="form-control"  name='id' value={complaints.id} disabled/>
+                        <input type="text" id="ipt-id" className="form-control"  name='id' value={complaints.complaintId} disabled/>
                     </div>
                     <div className="form-outline mt-2 mb-1" class='col'>
                     <label className="form-label" for="ipt-name" style={{marginBottom:"0.5px", marginTop:"5px"}}>Complaint Status:</label>
@@ -51,20 +66,20 @@ function CheckStatus ()  {
                     <div className="form-outline mt-2 mb-1" class='col'>
                         <div>
                             <label className="form-label" for="ipt-name" style={{marginBottom:"0.5px" , marginTop:"5px"}}>Name of Investigating Officer :</label>
-                            <input type="text" id="ipt-io" className="form-control"  name='io' value={complaints.io} disabled/>
+                            <input type="text" id="ipt-io" className="form-control"  name='io' value={complaints.investigatingOfficerFName} disabled/>
                         </div>
                         <div>
                             <label className="form-label" for="ipt-name" style={{marginBottom:"0.5px", marginTop:"5px"}}>Name of Police Station :</label>
-                            <input type="text" id="ipt-policeStation" className="form-control"  name='policeStation' value={complaints.policeStation} disabled/>
+                            <input type="text" id="ipt-policeStation" className="form-control"  name='policeStation' value={complaints.complaintPoliceStationAddress} disabled/>
                         </div>
                         <div>
                             <label className="form-label" for="ipt-name" style={{marginBottom:"0.5px", marginTop:"5px"}}>Location of Incident :</label>
-                            <input type="text" id="ipt-incidentPlace" className="form-control"  name='incidentPlace' value={complaints.incidentPlace} disabled/>
+                            <input type="text" id="ipt-incidentPlace" className="form-control"  name='incidentPlace' value={complaints.complaintIncidentPlace} disabled/>
                         </div>
-                        <div>
+                        {/* <div>
                             <label className="form-label" for="ipt-name"style={{marginBottom:"0.5px", marginTop:"5px"}} >Type Of Incident :</label>
                             <input type="text" id="ipt-type" className="form-control"  name='type' value={complaints.type} disabled/>
-                        </div>
+                        </div> */}
                     </div>
                     <div className="form-outline mt-2 mb-1" class='col' style={{marginTop:'25px'}}>
                         

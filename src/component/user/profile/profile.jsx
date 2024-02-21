@@ -1,11 +1,12 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import '../../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 
 const Profile = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const URL = "http://localhost:8080/citizen";
   
   const [citizen, setCitizen] = useState({
@@ -24,8 +25,34 @@ const Profile = () => {
   });
 
 
-  const [complaints , setComplaints] = useState([{"complaintsId":1 , "policeStationAddress": "puna thana","type":"HIT_AND_RUN","status":"ACTIVE"},
-                                                {"complaintsId":2, "policeStationAddress": "puna thana","type":"RUN","status":"ACTIVE"}]);
+  const [complaints , setComplaints] = useState([
+    {
+    complaintId: 1,
+    complaintCitizenFName: "mmmmm",
+    complaintPoliceStationAddress: "aaaa",
+    complaintIncidentDescription: "nmnmnmnmnm",
+    complaintIncidentDate: "2022-02-20",
+    complaintSuspects: "ksladklask",
+    complaintIncidentPlace: "nnnnnn",
+    complaintWitness: "abc",
+    complaintAdditionalInfo: "got robbed",
+    remark: "sdkjhksjdhfkjn",
+    status: "PENDING",
+    investigatingOfficerFName:"io1"
+},{
+  complaintId: 2,
+  complaintCitizenFName: "mmmmm",
+  complaintPoliceStationAddress: "aaaa",
+  complaintIncidentDescription: "nmnmnmnmnm",
+  complaintIncidentDate: "2022-02-20",
+  complaintSuspects: "ksladklask",
+  complaintIncidentPlace: "nnnnnn",
+  complaintWitness: "abc",
+  complaintAdditionalInfo: "got robbed",
+  remark: "sdkjhksjdhfkjn",
+  status: "PENDING",
+  investigatingOfficerFName:"io2"
+}]);
 
   const [searchText, setSearchText] = useState("");
   const email = location.state && location.state.userEmail;
@@ -56,7 +83,7 @@ const getComplaints = () => {
       Authorization: `Bearer ${sessionStorage.getItem('token')}`,
     }
   }
-  axios.get(URL + "/all-complaints",headersdata).then((response) => {
+  axios.get(URL+"/all-FIRs",headersdata).then((response) => {
     console.log(response.data.data);
       setComplaints(response.data.data);
       toast.info("Complaints Loaded !!")
@@ -120,7 +147,7 @@ useEffect(()=>{
               <th>#</th>
               <th>Police Station Name</th>
               <th>Status</th>
-              <th>Complaint type </th>
+              <th>Location </th>
               <th>{ }</th>
               <th>{ }</th>
             </tr>
@@ -130,11 +157,11 @@ useEffect(()=>{
               if(searchText !== ""){
                 if(complaint.id.toString().toLowerCase().includes(searchText.toLowerCase())){
                 return (
-                  <tr key={complaint.complaintsId}>
-                    <td>{complaint.complaintsId}</td>
-                    <td>{complaint.policeStationAddress}</td>
+                  <tr key={complaint.complaintId}>
+                    <td>{complaint.complaintId}</td>
+                    <td>{complaint.complaintPoliceStationAddress}</td>
                     <td>{complaint.status}</td>
-                    <td>{complaint.type}</td>
+                    <td>{complaint.complaintIncidentPlace}</td>
                     <td>
                     <Link to={{ pathname: '/user/checkStatus',state: { Id : complaint.id }  }}>
                     <button className="btn btn-primary" > Check Status </button>
@@ -151,15 +178,40 @@ useEffect(()=>{
                 }
               }else{
                 return (
-                  <tr key={complaint.complaintsId}>
-                    <td>{complaint.complaintsId}</td>
-                    <td>{complaint.policeStationAddress}</td>
+                  <tr key={complaint.complaintId}>
+                    <td>{complaint.complaintId}</td>
+                    <td>{complaint.complaintPoliceStationAddress}</td>
                     <td>{complaint.status}</td>
-                    <td>{complaint.type}</td>
+                    <td>{complaint.complaintIncidentPlace}</td>
                     <td>
-                    <Link to={{ pathname: '/user/checkStatus',state: { Id : complaint.complaintsId }  }}>
+                    {/* <Link to={{ pathname: '/user/checkStatus',state: {
+                        complaintId: 2,
+                        complaintCitizenFName: complaint.complaintCitizenFName,
+                        complaintPoliceStationAddress:complaint.complaintPoliceStationAddress,
+                        complaintIncidentDescription: complaint.complaintIncidentDescription,
+                        complaintIncidentDate: complaint.complaintIncidentDate,
+                        complaintSuspects: complaint.complaintSuspects,
+                        complaintIncidentPlace: complaint.complaintIncidentPlace,
+                        complaintWitness: complaint.complaintWitness,
+                        complaintAdditionalInfo: complaint.complaintAdditionalInfo,
+                        remark: complaint.remark,
+                        status: complaint.status,
+                        investigatingOfficerFName:complaint.investigatingOfficerFName }  }}>
                     <button className="btn btn-primary" > Check Status </button>
-                    </Link>
+                    </Link> */}
+                    <button className="btn btn-primary" onClick={()=>{ navigate("/user/checkStatus", {state: {
+                        complaintId: complaint.complaintId,
+                        complaintCitizenFName: complaint.complaintCitizenFName,
+                        complaintPoliceStationAddress:complaint.complaintPoliceStationAddress,
+                        complaintIncidentDescription: complaint.complaintIncidentDescription,
+                        complaintIncidentDate: complaint.complaintIncidentDate,
+                        complaintSuspects: complaint.complaintSuspects,
+                        complaintIncidentPlace: complaint.complaintIncidentPlace,
+                        complaintWitness: complaint.complaintWitness,
+                        complaintAdditionalInfo: complaint.complaintAdditionalInfo,
+                        remark: complaint.remark,
+                        status: complaint.status,
+                        investigatingOfficerFName:complaint.investigatingOfficerFName }})}}>Check Status</button>
                     </td>
                     <td>
                     {/* <Link to={{ pathname: '/user/withdrawComlaint',  state: { Id : userId }  }}>
