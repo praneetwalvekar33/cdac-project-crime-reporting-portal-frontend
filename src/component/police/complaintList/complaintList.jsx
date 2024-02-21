@@ -3,26 +3,30 @@ import '../../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import { getIoComplaintList } from "../../../services/io";
 import { useNavigate } from "react-router-dom";
 function ComplaintList (){
-
+    const complaintNo = 1000;
     
-    const [details, setDetails] = useState([{additionalInfo
-        : "",
-        complainant: "",
-        fir: true,
-        incidentDate: "",
-        incidentDescription: "",
-        incidentPlace: "",
-        suspects: "",
-        witness: ""}]);
-    const [detail, setDetail] = useState({additionalInfo
-        : "",
-        complainant: "",
-        fir: true,
-        incidentDate: "",
-        incidentDescription: "",
-        incidentPlace: "",
-        suspects: "",
-        witness: ""});
+    const [details, setDetails] = useState([{
+        id: 0,
+        complaintCitizenFName: "",
+        complaintIncidentDescription: "",
+        complaintIncidentDate: "",
+        complaintSuspects: "",
+        complaintIncidentPlace: "",
+        complaintWitness: "",
+        complaintAdditionalInfo: "",
+        remark: null,
+        status: ""}]);
+    const [detail, setDetail] = useState({
+        id: 0,
+        complaintCitizenFName: "",
+        complaintIncidentDescription: "",
+        complaintIncidentDate: "",
+        complaintSuspects: "",
+        complaintIncidentPlace: "",
+        complaintWitness: "",
+        complaintAdditionalInfo: "",
+        remark: null,
+        status: ""});
     const [messageid, setmessageid] = useState({ "msg": "" });
     const [compid, setcompid] = useState({ "id": "" });
     const [compDate, setcompdate] = useState({ "cDate": "" });
@@ -130,8 +134,8 @@ function ComplaintList (){
                 <thead>
                     <tr>
                         <th></th>
-                        <th>S No.</th>
-                        <th>Complaint</th>
+                        <th>Complaint No.</th>
+                        <th>complainant</th>
                         <th>Place</th>
                         <th>Date</th>
                         <th></th>
@@ -144,15 +148,25 @@ function ComplaintList (){
                             if (searchText !== "") {
                                 if (detail.Complaint_id.toString().toLowerCase().includes(searchText.toLowerCase())) {
                                     return (<>
-                                        <tr key={detail.Complaint_id}>
+                                        <tr key={detail.id}>
                                             <td>{"  "}</td>
-                                            <td>{detail.Sno}</td>
-                                            <td>{detail.complainant}</td>
-                                            <td>{detail.incidentPlace}</td>
-                                            <td>{detail.incidentDate}</td>
+                                            <td>{complaintNo+detail.id}</td>
+                                            <td>{detail.complaintCitizenFName}</td>
+                                            <td>{detail.complaintIncidentPlace}</td>
+                                            <td>{detail.complaintIncidentDate}</td>
                                             <td></td>
                                             <td>
-                                                <button className="btn btn-warning" value={detail} onClick={()=> {navigate("/police/complaintList/update",)}}>Select</button>
+                                                <button className="btn btn-warning" value={detail} onClick={()=> {navigate("/police/complaintList/update",{state: {
+        id: detail.id,
+        complaintCitizenFName: detail.complaintCitizenFName,
+        complaintIncidentDescription: detail.complaintIncidentDescription,
+        complaintIncidentDate: detail.complaintIncidentDate,
+        complaintSuspects: detail.complaintSuspects,
+        complaintIncidentPlace: detail.complaintIncidentPlace,
+        complaintWitness: detail.complaintWitness,
+        complaintAdditionalInfo: detail.complaintAdditionalInfo,
+        remark: detail.remark,
+        status: detail.status}})}}>Select</button>
                                             </td>
                                         </tr>
                                     </>);
@@ -161,15 +175,25 @@ function ComplaintList (){
                                 }
                             } else {
                                 return (
-                                    <tr key={detail.Complaint_id}>
+                                    <tr key={detail.id}>
                                         <td>{"  "}</td>
-                                        <td>{detail.Sno}</td>
-                                        <td>{detail.complainant}</td>
-                                        <td>{detail.incidentPlace}</td>
-                                        <td>{detail.incidentDate}</td>
+                                        <td>{complaintNo+detail.id}</td>
+                                        <td>{detail.complaintCitizenFName}</td>
+                                        <td>{detail.complaintIncidentPlace}</td>
+                                        <td>{detail.complaintIncidentDate}</td>
                                         <td></td>
                                         <td>
-                                            <button className="btn btn-warning" value={detail} onClick={()=> {navigate("/police/complaintList/update")}}>Select</button>
+                                            <button className="btn btn-warning" value={detail} onClick={()=> {navigate("/police/complaintList/update",{state: {
+        id: detail.id,
+        complaintCitizenFName: detail.complaintCitizenFName,
+        complaintIncidentDescription: detail.complaintIncidentDescription,
+        complaintIncidentDate: detail.complaintIncidentDate,
+        complaintSuspects: detail.complaintSuspects,
+        complaintIncidentPlace: detail.complaintIncidentPlace,
+        complaintWitness: detail.complaintWitness,
+        complaintAdditionalInfo: detail.complaintAdditionalInfo,
+        remark: detail.remark,
+        status: detail.status}})}}>Select</button>
                                         </td>
                                     </tr>)
                             }
