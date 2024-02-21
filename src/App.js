@@ -15,6 +15,10 @@ import PoliceLogin from './component/police/login/login';
 import PoliceProfile from './component/police/profile/profile';
 import PoliceComplaintList from './component/police/complaintList/complaintList';
 import PoliceUpdateComplaint from './component/police/updateComplaint/updateComplaint';
+import ListAllComplaints from './component/shoInterface/listAllComplaints/listAllComplaint';
+import ShoProfile from './component/shoInterface/shoProfile/shoProfile';
+import IoList from './component/shoInterface/ioList/ioList';
+import IoToSelect from './component/shoInterface/ioToSelect/ioToSelect';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import MainDiv from './mainDiv'
@@ -38,6 +42,10 @@ function App() {
           <Route path="/police/complaintList" exact element={<PoliceComplaintList/>}/>
           <Route path="/police/complaintList/update" exact element={<PoliceUpdateComplaint/>}/>
           <Route path="/police/profile" exact element={<PoliceProfile/>}/>
+          <Route path="/sho/listAllComplaint" exact element={<ListAllComplaints/>}/>
+          <Route path="/sho/ioList" exact element={<IoList/>}/>
+          <Route path="/sho/ioToSelect" exact element={<IoToSelect/>}/>
+          <Route path="/sho/shoProfile" exact element={<ShoProfile/>}/>
           <Route path="*" exact element={UserLogin}/>
     </Route>
   ));
