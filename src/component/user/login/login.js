@@ -48,8 +48,9 @@ const doLogin = async () => {
             console.log("successfull");
             toast.success("Welcome to the site...")
             console.log(info);
-            navigate('/user/profile');
-            // , { state: { userEmail:info.email} }
+
+            navigate('/user/profile', { state: { userEmail:info.email} });
+            
           }).catch((error) => {
               console.log("failed");
               console.log(result['error']);
