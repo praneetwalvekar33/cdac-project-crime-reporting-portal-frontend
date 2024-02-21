@@ -13,8 +13,9 @@ export async function getIoComplaintList(){
         }
         console.log(headers.headers.Authorization);
         const response =  await axios.get(url,headers);
-        console.log(response);
+        console.log(response);      
         return response.data;
+        
     }catch(error){
         createError(error);   
     }  
