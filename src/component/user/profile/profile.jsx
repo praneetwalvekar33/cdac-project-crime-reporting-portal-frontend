@@ -9,44 +9,61 @@ const Profile = () => {
   const URL = "http://localhost:8080/citizen";
   
   const [citizen, setCitizen] = useState({
-    id :'',
-    baseEntityUserTitle: 'Mr',
-    baseEntityUserGender: 'MALE',
-    baseEntityUserMobileNo: '',
-    aaddharNo: '',
-    occupation: '',
-    baseEntityUserAge: 0,
-    baseEntityUserEmail: '',
-    fatherName: '',
-    baseEntityUserFName: '',
-    baseEntityUserDOB: '2024-02-15',
-    baseEntityUserLName: '',
-    baseEntityUserRole:''
+    aaddharNo:"",
+    age: 0,
+    baseEntityUserEmail: "",
+    baseEntityUserRole:"",
+    dob: "",
+    fatherName: "",
+    fname: "",
+    gender: "",
+    lname: "",
+    mobileNo: "",
+    occupation: "",
+    title: "",
   });
-  // const [citizen, setCitizen] = useState([]);
-  const [complaints , setComplaints] = useState([{"id":1 , "policeStation": "puna thana","type":"HIT_AND_RUN","status":"ACTIVE"},
-                                                {"id":2, "policeStation": "puna thana","type":"RUN","status":"ACTIVE"}]);
 
-  const [searchText, setSearchText] = useState('');
-  // const email = location.state && location.state.userId;
+
+  const [complaints , setComplaints] = useState([{"complaintsId":1 , "policeStationAddress": "puna thana","type":"HIT_AND_RUN","status":"ACTIVE"},
+                                                {"complaintsId":2, "policeStationAddress": "puna thana","type":"RUN","status":"ACTIVE"}]);
+
+  const [searchText, setSearchText] = useState("");
+  const email = location.state && location.state.userEmail;
   // const userId =
   const getCitizen = () => {
-    const headers = {
+    console.log(sessionStorage.getItem('token'))
+    console.log(email)
+    const headersdata = {
       headers: {
-        Authorization: `Bearer sessionStorage.getItem('jwt')`,
+        Authorization: `Bearer ${sessionStorage.getItem('token')}`,
       }
     }
-    axios.get(URL , headers).then((response) => {
-      console.log(response.data)
-        setCitizen(response.data);
-    });
+    axios.get(URL, headersdata).then((response) => {
+      console.log(response.data.data);
+      setCitizen(response.data.data);
+      console.log(citizen);
+      console.log("done");
+      toast.success("User Profile Loaded Successfully!!")
+    }).catch((error)=>{
+      toast.error("Error Ouccured While loding the page !")
+    })
 }
 
 const getComplaints = () => {
-  axios.get(URL + "/citizen/complaint"+citizen.id).then((response) => {
-    console.log(response.data)
-      setComplaints(response.data);
-  });
+
+  const headersdata = {
+    headers: {
+      Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+    }
+  }
+  axios.get(URL + "/all-complaints",headersdata).then((response) => {
+    console.log(response.data.data);
+      setComplaints(response.data.data);
+      toast.info("Complaints Loaded !!")
+  }).catch((error)=>{
+    console.log(error)
+    toast.error("Unable to load Complaints..");
+  })
 }
 const OnSearch = (args) => {
   setSearchText(args.target.value);
@@ -54,13 +71,12 @@ const OnSearch = (args) => {
 
 useEffect(()=>{
   console.log("..");
-  getCitizen();
-  if(citizen.id !==''){
-    toast.success("User Logged in Successfull..!!")
-  }else{
-    toast.error("Some Error Occured while loading the page.")
+  try{
+    getCitizen();
+    getComplaints();
+  }catch{
+    console.log("Error occured in Profile!!")
   }
-  // getComplaints();
 },[]);
 
     return (
@@ -68,9 +84,9 @@ useEffect(()=>{
   <div className="card sm-3" style={{ width: "85%" }}>
     <div className="card-header" style={{ backgroundColor: "#f2f2f2", textAlign: "left" }}>
       <h4 className="card-title">Hello</h4>
-      <h5>{citizen.baseEntityUserFName} {citizen.baseEntityUserLName}</h5>
+      <h5>{citizen.fname} {citizen.lname}</h5>
       <h5>{citizen.baseEntityUserEmail}</h5>
-      <h5>{citizen.baseEntityUserMobileNo}</h5>
+      <h5>{citizen.mobileNo}</h5>
     </div>
     <div className="card-body">
   {/* <Link to={{ pathname: '/user/fileComplaint',  state: { Id : userId }  }}> */}
@@ -111,12 +127,12 @@ useEffect(()=>{
           </thead>
           <tbody>
             {complaints.map((complaint, index) =>{
-              if(searchText !== ''){
+              if(searchText !== ""){
                 if(complaint.id.toString().toLowerCase().includes(searchText.toLowerCase())){
                 return (
-                  <tr key={complaint.id}>
-                    <td>{complaint.id}</td>
-                    <td>{complaint.policeStation}</td>
+                  <tr key={complaint.complaintsId}>
+                    <td>{complaint.complaintsId}</td>
+                    <td>{complaint.policeStationAddress}</td>
                     <td>{complaint.status}</td>
                     <td>{complaint.type}</td>
                     <td>
@@ -135,13 +151,13 @@ useEffect(()=>{
                 }
               }else{
                 return (
-                  <tr key={complaint.id}>
-                    <td>{complaint.id}</td>
-                    <td>{complaint.policeStation}</td>
+                  <tr key={complaint.complaintsId}>
+                    <td>{complaint.complaintsId}</td>
+                    <td>{complaint.policeStationAddress}</td>
                     <td>{complaint.status}</td>
                     <td>{complaint.type}</td>
                     <td>
-                    <Link to={{ pathname: '/user/checkStatus',state: { Id : complaint.id }  }}>
+                    <Link to={{ pathname: '/user/checkStatus',state: { Id : complaint.complaintsId }  }}>
                     <button className="btn btn-primary" > Check Status </button>
                     </Link>
                     </td>
@@ -152,7 +168,6 @@ useEffect(()=>{
                     </td>
                   </tr>
                 )
-
               }
               })}
           </tbody>

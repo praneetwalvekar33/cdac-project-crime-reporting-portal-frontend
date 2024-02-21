@@ -9,7 +9,7 @@ import { useLocation } from "react-router-dom";
 
 
 const FileComplaint = () => {
-    const URL = "http://localhost:8080/citizen/";
+    const URL = "http://localhost:8080/citizen";
     const location = useLocation();
     const userid = location.state && location.state.Id;  //{location.state && location.state.myData}
     const [complaint , setComplaint] = useState({
@@ -20,7 +20,7 @@ const FileComplaint = () => {
         "incidentPlace": "",
         "witness": "",
         "additionalInfo": "",
-        "status": "PENDING"
+        // "status": "PENDING"
     });
     useEffect(()=>{
         toast.info("Please fill all the essential information")
@@ -42,7 +42,18 @@ const FileComplaint = () => {
         }else if(complaint.incidentPlace == ""){
             toast.warn("metion incident location")
         }else{
-            axios.post(URL+"/complaint"+userid , complaint)
+            const headersdata = {
+                headers: {
+                    Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+                }
+            }
+            axios.post(URL+"/add-complaint",headersdata,complaint).then((response)=>{
+                console.log(response.data);
+                toast.success("Complaint Recived !!");
+            }).catch((error)=>{
+                console.log(error);
+                toast.error("Somthing went Wrong !!");
+            })
         }
     }
 
@@ -60,8 +71,8 @@ const FileComplaint = () => {
             <form method='post'>
             <div class="row lg - 2">
             <div className="form-outline mt-2 mb-1" class='col'>
-            <label className="form-label" for="ipt-confirm-password">Status</label>
-                <input type="text" id="ipt-confirm-password" className="form-control" name='status' value={complaint.status} onChange={handleChange} disabled />
+            {/* <label className="form-label" for="ipt-confirm-password">Status</label> */}
+                <input type="text" id="ipt-confirm-password" className="form-control" name='status' value={'Pending'} onChange={handleChange} disabled />
             </div>
             <div className="form-outline mt-2 mb-1" class='col'>
             <label className="form-label" for="ipt-confirm-password">Date of INCIDENT</label>
