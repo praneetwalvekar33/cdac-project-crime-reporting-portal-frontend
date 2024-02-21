@@ -51,3 +51,18 @@ export async function getComplaint(id){
         createError(error);
     }
 }
+
+export async function getIoDetails(){
+    try{
+        const url = createUrl(`IO/`);
+        const headers = {
+            headers:{
+                Authorization: `Bearer ${sessionStorage['token']}`,
+            },
+        }
+        const response = await axios.get(url,headers);
+        return response.data;
+    }catch(error){
+        createError(error);
+    }
+}
