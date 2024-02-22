@@ -7,6 +7,8 @@ import { NavLink } from 'react-router-dom';
 
 const navbar = ()=>
 {
+
+
     return (
         <>
             <div className="container-fluid bg-primary-subtle">
@@ -34,7 +36,7 @@ const navbar = ()=>
                             </li>
                             <li className="nav-item dropdown">
                                 <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                                   aria-expanded="false">
+                                aria-expanded="false">
                                     Lodge a Complaint
                                 </a>
                                 <ul className="dropdown-menu">

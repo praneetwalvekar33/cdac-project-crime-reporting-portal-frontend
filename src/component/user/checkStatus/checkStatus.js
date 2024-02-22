@@ -82,10 +82,8 @@ function CheckStatus ()  {
                         </div> */}
                     </div>
                     <div className="form-outline mt-2 mb-1" class='col' style={{marginTop:'25px'}}>
-                        
                         <label className="form-label" for="ipt-name" style={{marginBottom:"0.5px", marginTop:"5px"}}> <h6> Remark Given By Investigating Officer : </h6></label>
                         <textarea type="text" rows={"5"} id="ipt-remark" className="form-control"  name='remark' value={complaints.remark} disabled/>
-                        
                         </div>
                     </div>
                 </div>

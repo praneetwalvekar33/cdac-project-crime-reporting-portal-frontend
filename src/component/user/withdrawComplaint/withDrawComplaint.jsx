@@ -9,47 +9,7 @@ import { toast } from "react-toastify";
 const WithDrawComplaint = () => {
     const navigate = useNavigate();
     const URL = "http://localhost:8080/citizen/";
-    const [complaints , setComplaints]  =  useState([
-        {
-    "complaintId": 1,
-    "complaintCitizenFName": "mmmmm",
-    "complaintPoliceStationAddress": "aaaa",
-    "complaintIncidentDescription": "nmnmnmnmnm",
-    "complaintIncidentDate": "2022-02-20",
-    "complaintSuspects": "ksladklask",
-    "complaintIncidentPlace": "nnnnnn",
-    "complaintWitness": "abc",
-    "complaintAdditionalInfo": "got robbed",
-    "remark": "sdkjhksjdhfkjn",
-    "status": "PENDING",
-    "investigatingOfficerFName":"io1"
-},{
-    "complaintId": 2,
-    "complaintCitizenFName": "mmmmm",
-    "complaintPoliceStationAddress":"aaaa",
-    "complaintIncidentDescription": "nmnmnmnmnm",
-    "complaintIncidentDate": "2022-02-20",
-    "complaintSuspects": "ksladklask",
-    "complaintIncidentPlace": "nnnnnn",
-    "complaintWitness": "abc",
-    "complaintAdditionalInfo": "got robbed",
-    "remark": "sdkjhksjdhfkjn",
-    "status": "ONGOING",
-    "investigatingOfficerFName":"io1"
-},{
-    "complaintId": 3,
-    "complaintCitizenFName": "mmmmm",
-    "complaintPoliceStationAddress":"aaaa",
-    "complaintIncidentDescription": "nmnmnmnmnm",
-    "complaintIncidentDate": "2022-02-20",
-    "complaintSuspects": "ksladklask",
-    "complaintIncidentPlace": "nnnnnn",
-    "complaintWitness": "abc",
-    "complaintAdditionalInfo": "got robbed",
-    "remark": "sdkjhksjdhfkjn",
-    "status": "PENDING",
-    "investigatingOfficerFName":"io1"
-}]);
+    const [complaints , setComplaints]  =  useState([]);
     const location = useLocation();
     const userId = location.state && location.state.Id
 
@@ -60,7 +20,7 @@ const WithDrawComplaint = () => {
                     Authorization: `Bearer ${sessionStorage.getItem('token')}`,
                 }
             }
-            axios.get(URL+"all-FIRs",headersdata).then((response) => {
+            axios.get(URL+"all-complaints",headersdata).then((response) => {
                 toast.success("complaints loaded successfully..!!");
                 setComplaints(response.data.data);
             })
@@ -105,6 +65,11 @@ const WithDrawComplaint = () => {
                 <div className="card-body py-8 px-md-8">
                     <div className="text-left mb-3"><h5>Complaints</h5></div>
                     <hr></hr>
+                    <div className="d-flex justify-content-end mb-3">
+                    <Link to={"/user/profile"}>
+                        <button className="btn btn-primary" >Profile</button>
+                    </Link>
+                    </div>
                     <div className="table-responsive">
                             <table className="table table-striped">
                             <thead>
@@ -118,13 +83,13 @@ const WithDrawComplaint = () => {
                             </thead>
                             <tbody>
                                 {complaints.map((complaint, index) =>{
-                                    if(complaint.status === 'PENDING'){
+                                    if(!complaint.isFIR){
                                         return (<>
                                             <tr key={complaint.complaintId}>
                                                 <td>{complaint.complaintId}</td>
-                                                <td>{complaint.complaintPoliceStationAddress}</td>
-                                                <td>{complaint.status}</td>
-                                                <td>{complaint.complaintIncidentDate}</td>
+                                                <td>{complaint.policeStationAddress}</td>
+                                                <td>PENDING</td>
+                                                <td>{complaint.incidentDate}</td>
                                                 <td>
                                                 <button className="btn btn-danger" type="button" data-bs-toggle="collapse" data-bs-target={`#collapse${complaint.complaintId}`} aria-expanded="false" aria-controls={`collapse${complaint.complaintId}`}>
                                                     Withdraw Complaint
@@ -138,15 +103,15 @@ const WithDrawComplaint = () => {
                                                         <table className="table table-responsive">
                                                             <tr>
                                                                 <td>Location :</td>
-                                                                <td>{complaint.complaintIncidentPlace}</td>
+                                                                <td>{complaint.incidentPlace}</td>
                                                             </tr>
                                                             <tr>
                                                                 <td>Date :</td>
-                                                                <td>{complaint.complaintIncidentDate}</td>
+                                                                <td>{complaint.incidentDate}</td>
                                                             </tr>
                                                             <tr>
                                                                 <td>Description :</td>
-                                                                <td>{complaint.complaintIncidentDescription}</td>
+                                                                <td>{complaint.incidentDescription}</td>
                                                             </tr>
                                                             <tr>
                                                                 <td colSpan={2}>
@@ -156,7 +121,7 @@ const WithDrawComplaint = () => {
                                                             </tr>
                                                             <tr>
                                                                 <td colSpan={2}>
-                                                                <button type="button" class="btn btn-danger" onClick={() => {deletePendingComplaint(complaint.complaintId )}}>Danger</button>
+                                                                <button type="button" class="btn btn-danger" onClick={() => {deletePendingComplaint(complaint.complaintId )}}>Remove Complaint</button>
                                                                 </td>
                                                             </tr>
                                                         </table>

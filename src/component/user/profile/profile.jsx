@@ -66,7 +66,7 @@ const Profile = () => {
       }
     }
     axios.get(URL, headersdata).then((response) => {
-      console.log(response.data.data);
+      console.log(response.data);
       setCitizen(response.data.data);
       console.log(citizen);
       console.log("done");
@@ -163,14 +163,28 @@ useEffect(()=>{
                     <td>{complaint.status}</td>
                     <td>{complaint.complaintIncidentPlace}</td>
                     <td>
-                    <Link to={{ pathname: '/user/checkStatus',state: { Id : complaint.id }  }}>
+                    {/* <Link to={{ pathname: '/user/checkStatus',state: { Id : complaint.id }  }}>
                     <button className="btn btn-primary" > Check Status </button>
-                    </Link>
+                    </Link> */}
+
                     </td>
                     <td>
                     {/* <Link to={{ pathname: '/user/withdrawComlaint',  state: { Id : userId }  }}>
                     <button className="btn btn-danger" > Withdraw Complaint </button>
                     </Link> */}
+                      <button className="btn btn-primary" onClick={()=>{ navigate("/user/checkStatus", {state: {
+                        complaintId: complaint.complaintId,
+                        complaintCitizenFName: complaint.complaintCitizenFName,
+                        complaintPoliceStationAddress:complaint.complaintPoliceStationAddress,
+                        complaintIncidentDescription: complaint.complaintIncidentDescription,
+                        complaintIncidentDate: complaint.complaintIncidentDate,
+                        complaintSuspects: complaint.complaintSuspects,
+                        complaintIncidentPlace: complaint.complaintIncidentPlace,
+                        complaintWitness: complaint.complaintWitness,
+                        complaintAdditionalInfo: complaint.complaintAdditionalInfo,
+                        remark: complaint.remark,
+                        status: complaint.status,
+                        investigatingOfficerFName:complaint.investigatingOfficerFName }})}}>Check Status</button>
                     </td>
                   </tr>
                 )}else{
