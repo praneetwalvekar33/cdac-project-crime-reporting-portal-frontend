@@ -2,7 +2,7 @@ import avatar from './images/loggedinavatar.png';
 import emblem from './images/emblem.png';
 import '../../../../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js'
 import '../../../../node_modules/bootstrap/dist/css/bootstrap.min.css'
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 
 
 const navbar = ()=>
@@ -77,7 +77,7 @@ const navbar = ()=>
                                 <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                                    aria-expanded="false">
                                     <img
-                                                src={avatar}
+                                                src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"
                                                 className="rounded-circle"
                                                 height="50px" alt="Avatar"/>
                                 </a>
@@ -85,7 +85,7 @@ const navbar = ()=>
                                     <a className="dropdown-item" href="#">My Profile</a>
                                     <a className="dropdown-item" href="#">Settings</a>
                                     <div className="dropdown-divider"></div>
-                                    <a className="dropdown-item" href="#">Logout</a>
+                                    <Link to={"/"}><a className="dropdown-item" >Logout</a></Link>
                                 </ul>
                             </ul>
 

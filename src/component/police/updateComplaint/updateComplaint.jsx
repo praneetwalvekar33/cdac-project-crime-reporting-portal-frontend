@@ -27,6 +27,7 @@ function UpdateComplaint()  {
       if(response.status === 'SUCCESS'){
         const responseData = await getComplaint(complaints.id);
         if(response.status === 'SUCCESS'){
+            console.log(responseData.data);
             setComplaints(responseData.data);
         }
         toast.success("Complaint updated successfully")
@@ -52,6 +53,7 @@ function UpdateComplaint()  {
       };
 
     useEffect(()=>{
+        console.log(complaint);
         setComplaints(complaint);
     },[]);
     return(
