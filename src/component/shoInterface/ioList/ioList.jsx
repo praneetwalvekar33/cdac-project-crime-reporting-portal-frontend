@@ -5,23 +5,19 @@ import { toast } from "react-toastify";
 import '../../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 
 const IoList = ()=>{
+    const ioNo = 100;
     const URL = "http://localhost:8080/SHO"
     const [listIos,setlistIos]= useState([{
-        "id": 1,
-        "designation": "string",
-        "joiningDate": "2024-02-21",
-        "numberOfCases": 0,
-        "noOfCasesSolved": 0,
-        "fname": "lakhan",
-        "lname": "string"
-    },{
-        "id": 2,
-        "designation": "string",
-        "joiningDate": "2024-02-21",
-        "numberOfCases": 0,
-        "noOfCasesSolved": 0,
-        "fname": "ram",
-        "lname": "string"
+        id:0,
+        joiningDate: "",
+        designation: "",
+        dutyStatus: "",
+        baseEntityUserEmail: "",
+        stationState: "",
+        mobileNo: "",
+        lname: "",
+        fname: "",
+        dob: ""
     }]);
     const getAllIos=()=>{
         const headersData={
@@ -77,7 +73,7 @@ const IoList = ()=>{
     <th>#</th>
     <th>First Name</th>
     <th>Last Name</th>
-    <th>Total Cases</th>
+    <th>Desgination</th>
     <th>{ }</th>
     </tr>
 </thead>
@@ -86,10 +82,10 @@ const IoList = ()=>{
     
         return (<>
         <tr key={list.id}>
-            <td>{list.id}</td>
+            <td>{ioNo+list.id}</td>
             <td>{list.fname}</td>
             <td>{list.lname}</td>
-            <td>{list.numberOfCases}</td>
+            <td>{list.designation}</td>
             <td>
             <button className="btn btn-danger" type="button" data-bs-toggle="collapse" data-bs-target={`#collapse${list.id}`} aria-expanded="false" aria-controls={`collapse${list.id}`}>
                                             More Info
@@ -102,8 +98,8 @@ const IoList = ()=>{
                 <div class="card card-body">
                     <table className="table table-responsive">
                         <tr>
-                            <td>Total Cases Solved :</td>
-                            <td>{list.noOfCasesSolved}</td>
+                            <td>Duty Status :</td>
+                            <td>{list.dutyStatus}</td>
                         </tr>
                         <tr>
                             <td>Designation</td>

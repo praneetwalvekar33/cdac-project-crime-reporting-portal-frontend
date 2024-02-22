@@ -27,6 +27,7 @@ function UpdateComplaint()  {
       if(response.status === 'SUCCESS'){
         const responseData = await getComplaint(complaints.id);
         if(response.status === 'SUCCESS'){
+            console.log(responseData.data);
             setComplaints(responseData.data);
         }
         toast.success("Complaint updated successfully")
@@ -52,6 +53,7 @@ function UpdateComplaint()  {
       };
 
     useEffect(()=>{
+        console.log(complaint);
         setComplaints(complaint);
     },[]);
     return(
@@ -62,7 +64,7 @@ function UpdateComplaint()  {
                 <div className="card-body py-8 px-md-8">
                     <div className="text-center mb-3" style={{textAlign :"left"}}><h3>Complaint Status </h3></div>
                     <div className="d-flex justify-content-end mb-3">
-                    <a href='/user/profile' className="link-primary"><h6>Profile</h6></a>
+                    <a href='/police/profile' className="link-primary"><h6>Profile</h6></a>
                     </div>
                     <hr></hr>
                     <div class="row lg - 2">

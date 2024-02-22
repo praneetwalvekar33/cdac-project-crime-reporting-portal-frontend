@@ -65,7 +65,7 @@ const Profile = () => {
                             </div>
                             <hr></hr>
                             <div className="d-flex justify-content-between align-items-center mb-3">
-                                <h4 className="text-right"> User Profile</h4>
+                                <h4 className="text-right"> SHO Profile</h4>
                             </div>
                             <div className="row mt-2">
                                 <div className="col-md-6"><label className="labels">Name</label><input type="text" readonly disabled className="form-control"  value={details.fname}></input></div>

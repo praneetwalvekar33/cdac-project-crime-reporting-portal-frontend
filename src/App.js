@@ -25,13 +25,18 @@ import UserRegistration from './component/user/registration/registration';
 import UserUpdateMobileNo from './component/user/updateMobileNo/updateMobileNo';
 import UserWithDrawComplaint from './component/user/withdrawComplaint/withDrawComplaint';
 import MainDiv from './mainDiv';
+import CommonLogin from './component/commonLogin';
+import ShoLogin from './component/shoInterface/login/login';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 
 function App() {
 
   const router = createBrowserRouter(createRoutesFromElements(
     <Route path="/" element={<MainDiv />}>
-          <Route index path="/" exact element={<UserLogin/>}/>
+          <Route index path="/" exact element={<CommonLogin/>}/>
           <Route path="/user/login" exact element={<UserLogin/>}/>
           <Route path="/user/registration" exact element={<UserRegistration/>}/>
           <Route path="/user/detailsRegistration" exact element={<UserDetailRegistration/>}/>
@@ -43,6 +48,7 @@ function App() {
           <Route path="/user/profile" exact element={<UserProfile/>}/>
           <Route path="/user/newComplaint" exact element={<UserNewComplaint/>}/>
           <Route path="/police/Login" exact element={<PoliceLogin/>}/>
+          <Route path="/sho/Login" exact element={<ShoLogin/>}/>
           <Route path="/police/complaintList" exact element={<PoliceComplaintList/>}/>
           <Route path="/police/complaintList/update" exact element={<PoliceUpdateComplaint/>}/>
           <Route path="/police/profile" exact element={<PoliceProfile/>}/>

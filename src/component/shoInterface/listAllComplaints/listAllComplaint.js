@@ -29,14 +29,17 @@ const AllComplaints = ()=>{
         "fir": true
     }]);
 
-    const getAllComplaint =()=>{
-    const headersdata = {
-    headers: {
-        Authorization: `Bearer ${sessionStorage.getItem('token')}`,
-    }
-}
-        let url = URL + "/police-station/all-complaints "
-        axios.get(url,headersdata).then((response)=>{
+    const getAllComplaint =async ()=>{
+        const headers = {
+            headers:{
+                Authorization: `Bearer ${sessionStorage['token']}`,
+            },
+        }
+        let url = URL + "/police-station/all-complaints";
+        console.log("url"+ url);
+        console.log("header");
+        console.log(headers)
+        await axios.get(url,headers).then((response)=>{
             console.log(response.data);
             setComplaints(response.data.data);
             toast.success("All complaints Loaded sucessfully")
