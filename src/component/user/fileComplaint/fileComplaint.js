@@ -11,20 +11,20 @@ import { useLocation } from "react-router-dom";
 const FileComplaint = () => {
     const URL = "http://localhost:8080/citizen";
     const location = useLocation();
-    const userid = location.state && location.state.Id;  //{location.state && location.state.myData}
+    const useremail = location.state && location.state.Id;  //{location.state && location.state.myData}
     const [complaint , setComplaint] = useState({
         "incidentDescription": "",
         "incidentDate": "",
         "suspects": "",
-        "policeStationId": 0,
+        "policeStationAddress": 0,
         "incidentPlace": "",
         "witness": "",
         "additionalInfo": "",
         // "status": "PENDING"
     });
-    useEffect(()=>{
-        toast.info("Please fill all the essential information")
-    });
+    // useEffect(()=>{
+    //     toast.info("Please fill all the essential information")
+    // });
     const navigate = useNavigate();
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -34,6 +34,7 @@ const FileComplaint = () => {
     });
         console.log(complaint);
     };
+    
     const postComplaint = ()=>{
         if(complaint.incidentDescription == ""){
             toast.warn("please describe the incident")
@@ -47,9 +48,10 @@ const FileComplaint = () => {
                     Authorization: `Bearer ${sessionStorage.getItem('token')}`,
                 }
             }
-            axios.post(URL+"/add-complaint",headersdata,complaint).then((response)=>{
+            axios.post(URL+"/add-complaint",complaint, headersdata).then((response)=>{
                 console.log(response.data);
                 toast.success("Complaint Recived !!");
+                navigate("/user/profile")
             }).catch((error)=>{
                 console.log(error);
                 toast.error("Somthing went Wrong !!");
@@ -65,18 +67,18 @@ const FileComplaint = () => {
         <div className="card-body py-8 px-md-8">
             <div className="text-center mb-3">---File a Complaint---</div>
             <div className="d-flex justify-content-end mb-3">
-            <a href='/user/login' className="link-primary">Go back</a>
+            <a href='/user/profile' className="link-primary">Go back</a>
             </div>
             <hr></hr>
             <form method='post'>
             <div class="row lg - 2">
             <div className="form-outline mt-2 mb-1" class='col'>
-            {/* <label className="form-label" for="ipt-confirm-password">Status</label> */}
-                <input type="text" id="ipt-confirm-password" className="form-control" name='status' value={'Pending'} onChange={handleChange} disabled />
+            <label className="form-label" for="ipt-confirm-password">{ }</label>
+                <input type="text" id="ipt-confirm-password" className="form-control" name='status' value={'PENDING'} onChange={handleChange} disabled />
             </div>
             <div className="form-outline mt-2 mb-1" class='col'>
             <label className="form-label" for="ipt-confirm-password">Date of INCIDENT</label>
-                <input type="date" id="ipt-date" className="form-control"  name='incidentDate' value={complaint.incidentDate} onChange={handleChange} pattern="yyyy-MM-dd" />
+                <input type="text" pattern="\d{4}-\d{2}-\d{2}" placeholder="YYYY-MM-DD" id="ipt-date" className="form-control"  name='incidentDate' value={complaint.incidentDate} onChange={handleChange}/>
             </div>
             </div>
             <div className="form-outline mt-2 mb-1">
@@ -89,13 +91,14 @@ const FileComplaint = () => {
             </div>
             <div className="form-outline mb-1">
             <label className="form-label" for="ipt-confirm-password">Name of Nearest Police Station</label>
-                <select class="form-select" aria-label="Default select example" value={complaint.policeStationId}name='policeStationId' onChange={handleChange} >
-                    <option value="1">Station 1</option>
+                <select class="form-select" aria-label="Default select example" value={complaint.policeStationAddress}name='policeStationAddress' onChange={handleChange} >
+                    <option selected>Police-Station </option>
+                    <option value="home side ">Station 1</option>
                     <option value="2">Station 2</option>
                     <option value="3">Station 3</option>
                     <option value="4">Station 4</option>
                     <option value="5">Station 5</option>
-                    <option selected>Police-Station </option>
+                    
                 </select>
             </div>
             <div className="form-outline mb-1">

@@ -7,17 +7,22 @@ import { toast } from "react-toastify";
 
 
 const WithDrawComplaint = () => {
+    const navigate = useNavigate();
     const URL = "http://localhost:8080/citizen/";
-    const [complaints , setComplaints]  =  useState([{"id":1 , "policeStation": "puna thana","incidentPlace":"xyz","type":"HIT_AND_RUN","status":"PENDING","incidentDate":"2023-12-14","incidentDescription":"zxc zxc zxc zxc zcx ssd er  sdgst" },
-                                                    {"id":2 , "policeStation": "puna thana","incidentPlace":"xyz","type":"RUN","status":"PENDING","incidentDate":"2023-12-14","incidentDescription":"zxc zxc zxc zxc zcx ssd er  sdgst" }]);
+    const [complaints , setComplaints]  =  useState([]);
     const location = useLocation();
     const userId = location.state && location.state.Id
 
     const getPendingComplaint = () => {
         try{
-            axios.get(URL+"pendingComplaint"+ userId).then((response) => {
+            const headersdata = {
+                headers: {
+                    Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+                }
+            }
+            axios.get(URL+"all-complaints",headersdata).then((response) => {
                 toast.success("complaints loaded successfully..!!");
-                setComplaints(response.data);
+                setComplaints(response.data.data);
             })
         }catch(error){
                 toast.error("Error Occured while loding page..!!");
@@ -27,8 +32,20 @@ const WithDrawComplaint = () => {
 
     const deletePendingComplaint = ((pendingId)=>{
         try{
-            console.log("in delete");
-            console.log(pendingId);
+            const headersdata = {
+                headers: {
+                    Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+                }
+            }
+            let url = URL + "delete-complaint/"+pendingId;
+            axios.delete(url, headersdata).then((response)=>{
+                console.log("in delete");
+                console.log(pendingId);
+                toast.success("complaints removed successfully..!!");
+                getPendingComplaint();
+            })
+
+
         }catch(error){
             console.log(error);
             toast.error("Unable to process the Request !!")
@@ -48,6 +65,11 @@ const WithDrawComplaint = () => {
                 <div className="card-body py-8 px-md-8">
                     <div className="text-left mb-3"><h5>Complaints</h5></div>
                     <hr></hr>
+                    <div className="d-flex justify-content-end mb-3">
+                    <Link to={"/user/profile"}>
+                        <button className="btn btn-primary" >Profile</button>
+                    </Link>
+                    </div>
                     <div className="table-responsive">
                             <table className="table table-striped">
                             <thead>
@@ -55,61 +77,65 @@ const WithDrawComplaint = () => {
                                     <th>#</th>
                                     <th>Police Station Name</th>
                                     <th>Status</th>
-                                    <th>Complaint type </th>
+                                    <th>Incident Date</th>
                                     <th>{ }</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {complaints.map((complaint, index) =>{
+                                    if(!complaint.isFIR){
                                         return (<>
-                                                <tr key={complaint.id}>
-                                                    <td>{complaint.id}</td>
-                                                    <td>{complaint.policeStation}</td>
-                                                    <td>{complaint.status}</td>
-                                                    <td>{complaint.type}</td>
-                                                    <td>
-                                                    <button className="btn btn-danger" type="button" data-bs-toggle="collapse" data-bs-target={`#collapse${complaint.id}`} aria-expanded="false" aria-controls={`collapse${complaint.id}`}>
-                                                        Withdraw Complaint
-                                                    </button>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td colSpan={"5"}>
-                                                    <div className="collapse" id={`collapse${complaint.id}`}>
-                                                        <div class="card card-body">
-                                                            <table className="table table-responsive">
-                                                                <tr>
-                                                                    <td>Location :</td>
-                                                                    <td>{complaint.incidentPlace}</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>Date :</td>
-                                                                    <td>{complaint.incidentDate}</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>Description :</td>
-                                                                    <td>{complaint.incidentDescription}</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td colSpan={2}>
-                                                                        <h6>Are you Sure you want to Withdraw your complaint*</h6>
-                                                                    </td>
-                                                                    
-                                                                </tr>
-                                                                <tr>
-                                                                    <td colSpan={2}>
-                                                                    <button type="button" class="btn btn-danger" onClick={() => {deletePendingComplaint(complaint.id)}}>Danger</button>
-                                                                    </td>
-                                                                    
-                                                                </tr>
-                                                            </table>
-                                                            
-                                                            
-                                                        </div>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                </>)})}
+                                            <tr key={complaint.complaintId}>
+                                                <td>{complaint.complaintId}</td>
+                                                <td>{complaint.policeStationAddress}</td>
+                                                <td>PENDING</td>
+                                                <td>{complaint.incidentDate}</td>
+                                                <td>
+                                                <button className="btn btn-danger" type="button" data-bs-toggle="collapse" data-bs-target={`#collapse${complaint.complaintId}`} aria-expanded="false" aria-controls={`collapse${complaint.complaintId}`}>
+                                                    Withdraw Complaint
+                                                </button>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td colSpan={"5"}>
+                                                <div className="collapse" id={`collapse${complaint.complaintId}`}>
+                                                    <div class="card card-body">
+                                                        <table className="table table-responsive">
+                                                            <tr>
+                                                                <td>Location :</td>
+                                                                <td>{complaint.incidentPlace}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Date :</td>
+                                                                <td>{complaint.incidentDate}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Description :</td>
+                                                                <td>{complaint.incidentDescription}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td colSpan={2}>
+                                                                    <h6>Are you Sure you want to Withdraw your complaint*</h6>
+                                                                </td>
+                                                                
+                                                            </tr>
+                                                            <tr>
+                                                                <td colSpan={2}>
+                                                                <button type="button" class="btn btn-danger" onClick={() => {deletePendingComplaint(complaint.complaintId )}}>Remove Complaint</button>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                        
+                                                        
+                                                    </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            </>)
+                                    }else{
+                                        return null;
+                                    }
+                                    })}
                             </tbody>
                             </table>
                     </div>
